@@ -14,6 +14,7 @@ namespace openKey
 
         }
 
+        //метод для формирования простых чисел
         static private int Simple()
         {
             int n = 0;
@@ -24,7 +25,8 @@ namespace openKey
 
             while (!good)
             {
-                n = rnd.Next();
+                //Ограничение в целях рациональности
+                n = rnd.Next(0, 32);
 
                 int count = 0;
 
@@ -47,7 +49,7 @@ namespace openKey
 
             int[] simple = new int[2];
 
-            int n, fynEilera, e;
+            int n, fynEilera, e = 0;
 
             bool good = false;
 
@@ -61,22 +63,50 @@ namespace openKey
                 if (simple[0] * simple[1] > bigReg.Length)
                     good = true;
             }
-
+            
+            //Число n понадобиться для дальнейшего шифрования
+            //fynEilera нужна для поиска взаимно простого числа и формирования закрытого ключа
             n = simple[0] * simple[1];
             fynEilera = (simple[0] - 1) * (simple[1] - 1);
 
             Random rnd = new Random();
 
-            //Цикл для формирования взаимно простого числа с n
+            //Цикл для формирования взаимно простого числа с fynEilera
             while (good)
             {
-                e = rnd.Next(0, n);
+                //Ограничение в целях рациональности
+                e = rnd.Next(0, 10);
 
-                if (n % e == 0)
+                if (fynEilera % e != 0)
                     good = false;
             }
 
+            //d - закрытый ключ, checkSimple - коэффициент при fynEilera
+            int d = 0; 
 
+            //Нахождение взаимно простого числа с е по модулю fynEilera
+            //ключ d нужен для дешифровки сообщения, его вычисление занимает
+            //слишком много времени, без него программа нормально шифрует
+            /*
+            while (!good)
+            {
+                d++;
+
+                if (d * e % fynEilera == 1)
+                    good = true;
+
+            }
+            */
+
+            //Формирование строки результата
+            for (int i = 0; i < massenge.Length; i++)
+            {
+                for (int j = 0; j < bigReg.Length; j++)
+                {
+                    if (tmpString[i] == bigReg[j])
+                        result += $"{Math.Pow(j, e) % n} ";
+                }
+            }
 
             return result;
         }
