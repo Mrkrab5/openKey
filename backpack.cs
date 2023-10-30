@@ -29,7 +29,18 @@ namespace openKey
 
             int[] backpackValue = new int[] {62, 93, 186, 403, 417, 352, 315, 210};
 
-            int[] encryptSymbol = new int[massenge.Length];
+            for (int i = 0; i < massenge.Length; i++)
+            {
+                int sumValue = 0;
+
+                for (int j = 0; j < backpackValue.Length; j++)
+                {
+                    if (dictBinCode[tmpString[i]][j] == '1')
+                        sumValue += backpackValue[j];
+                }
+
+                result += $"{sumValue} ";
+            }
 
             return result;
         }

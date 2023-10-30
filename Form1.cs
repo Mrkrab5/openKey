@@ -18,6 +18,9 @@ namespace openKey
         {
             if (choiseEncrypt.SelectedIndex == 0)
                 itogEncrypt.Text = RSA.Decoding(entryMassenge.Text);
+            
+            else if (choiseEncrypt.SelectedIndex == 1)
+                itogEncrypt.Text = backpack.Decoding(entryMassenge.Text);
         }
 
     }
