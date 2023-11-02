@@ -21,6 +21,9 @@ namespace openKey
             
             else if (choiseEncrypt.SelectedIndex == 1)
                 itogEncrypt.Text = backpack.Decoding(entryMassenge.Text);
+
+            else if (choiseEncrypt.SelectedIndex == 2)
+                itogEncrypt.Text = elGamal.Decoding(entryMassenge.Text);
         }
 
     }
